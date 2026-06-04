@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy | Johor Bahru Field Notes</title>
+  <meta name="description" content="Privacy policy for the Johor Bahru trip questionnaire.">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Nunito+Sans:wght@400;600;700;800&display=swap");
+
+    :root {
+      --ink: #1f241f;
+      --paper: #fbf7ee;
+      --paper-strong: #fffdf7;
+      --leaf: #2f6b4f;
+      --leaf-deep: #244736;
+      --mango: #f2a93b;
+      --rose: #dd5b5b;
+      --sky: #4f93aa;
+      --line: rgba(31, 36, 31, 0.18);
+      --muted: rgba(31, 36, 31, 0.66);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(79, 147, 170, 0.13), transparent 34%),
+        linear-gradient(45deg, rgba(242, 169, 59, 0.18), transparent 42%),
+        var(--paper);
+      font-family: "Nunito Sans", "Segoe UI", sans-serif;
+      line-height: 1.58;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(31, 36, 31, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 36, 31, 0.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+    }
+
+    a {
+      color: var(--leaf-deep);
+      font-weight: 900;
+    }
+
+    .shell {
+      position: relative;
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(251, 247, 238, 0.9);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar__inner {
+      display: flex;
+      min-height: 64px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+    }
+
+    .brand__mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--mango);
+      box-shadow: 4px 4px 0 var(--leaf);
+      font-family: "Fraunces", Georgia, serif;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 9px 14px;
+      color: var(--ink);
+      background: var(--paper-strong);
+      box-shadow: 4px 4px 0 var(--ink);
+      cursor: pointer;
+      font-weight: 900;
+      text-decoration: none;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    main {
+      padding: 56px 0 80px;
+    }
+
+    .hero {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 30px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--leaf-deep);
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--rose);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: "Fraunces", Georgia, serif;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 800px;
+      font-size: clamp(3rem, 8vw, 6.6rem);
+    }
+
+    .lede {
+      max-width: 760px;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.22rem);
+      font-weight: 700;
+    }
+
+    .policy-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .policy-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      background: rgba(255, 253, 247, 0.74);
+    }
+
+    .policy-card h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+    }
+
+    .policy-card p,
+    .policy-card ul {
+      margin: 0;
+    }
+
+    .policy-card p + p,
+    .policy-card p + ul,
+    .policy-card ul + p {
+      margin-top: 12px;
+    }
+
+    .policy-card ul {
+      padding-left: 22px;
+    }
+
+    .note {
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 16px;
+      background: var(--paper-strong);
+      box-shadow: 5px 5px 0 var(--mango);
+      font-weight: 800;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    @media (max-width: 620px) {
+      .shell {
+        width: min(100% - 24px, 920px);
+      }
+
+      .topbar__inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar__inner">
+      <div class="brand">
+        <span class="brand__mark">JB</span>
+        <span>Johor Bahru Field Notes</span>
+      </div>
+      <a class="button" href="/">Back to questionnaire</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <p class="kicker">Privacy policy, not a treasure map</p>
+      <h1>Your data, kept out of the glovebox.</h1>
+      <p class="lede">
+        This policy explains what happens when you submit the Johor Bahru trip questionnaire. Short version: the trip organiser gets your answers by email so they can plan the trip, not build a tiny surveillance empire with snacks.
+      </p>
+    </section>
+
+    <section class="policy-grid" aria-label="Privacy policy details">
+      <div class="note">
+        Last updated: 4 June 2026. This policy is written for a small private trip-planning questionnaire based in Singapore and is intended to align with Singapore's Personal Data Protection Act 2012.
+      </div>
+
+      <article class="policy-card">
+        <h2>Who Is Responsible</h2>
+        <p>
+          The data controller for this questionnaire is the trip organiser who sent you this link. For privacy requests, contact that organiser through the same chat, email, or contact method used to share the questionnaire.
+        </p>
+        <p>
+          If you are the organiser deploying this site, include your preferred contact details in the message that shares the form, and respond to privacy requests within a reasonable time.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>What We Collect</h2>
+        <p>When you submit the questionnaire, the form may collect:</p>
+        <ul>
+          <li>your name or group-chat alias;</li>
+          <li>your preferred contact method;</li>
+          <li>schedule availability and date constraints;</li>
+          <li>trip expectations, preferred activities, budget comfort, and travel preferences;</li>
+          <li>voluntary notes such as allergies, mobility needs, comfort constraints, or hard limits;</li>
+          <li>technical submission details such as the time of submission and standard hosting or email-provider logs.</li>
+        </ul>
+        <p>
+          Please do not include highly sensitive information unless it is genuinely needed for safe trip planning. The form is for vibes, logistics, and responsible snack-adjacent planning.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Why We Use It</h2>
+        <p>Your answers are used only to:</p>
+        <ul>
+          <li>plan dates and itinerary options for the Johor Bahru trip;</li>
+          <li>understand budget comfort and activity preferences;</li>
+          <li>avoid foreseeable discomfort, safety issues, or accessibility problems;</li>
+          <li>follow up with you about the trip; and</li>
+          <li>protect the form from spam, misuse, or accidental chaos beyond the approved recreational level.</li>
+        </ul>
+        <p>
+          The responses are not used for marketing, sold to anyone, or fed into a mysterious mall kiosk that knows too much.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Consent</h2>
+        <p>
+          By ticking the consent box and submitting the form, you consent to the collection, use, and disclosure of your response for the purposes above. Optional fields are optional; leaving them blank is allowed and emotionally valid.
+        </p>
+        <p>
+          You may withdraw consent by contacting the trip organiser. If you withdraw consent, the organiser may no longer be able to include your preferences in planning, which means your dream activity may tragically remain only a dream.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Disclosure And Transfer</h2>
+        <p>
+          When you submit, your response is sent through a backend email route to the trip organiser. The public webpage does not expose the real email service endpoint, API token, or recipient address.
+        </p>
+        <p>
+          The site may use hosting and email providers such as Vercel and the organiser's chosen email service. Those providers may process data outside Singapore. The organiser should use reputable providers and take reasonable steps to ensure any overseas transfer receives protection comparable to Singapore's PDPA standards.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Retention</h2>
+        <p>
+          Responses should be kept only as long as needed to plan and wrap up the trip. As a default, the organiser should delete or anonymise responses within 90 days after the trip ends, unless a longer period is reasonably needed for safety, dispute resolution, or legal obligations.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Access And Correction</h2>
+        <p>
+          You may ask the organiser for access to your submitted response, correction of inaccurate information, or deletion where it is reasonable to do so. If your availability changes, please say so before the itinerary becomes a spreadsheet with opinions.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Accuracy</h2>
+        <p>
+          Please provide information that is accurate enough for planning. The organiser may rely on your response when choosing dates, activities, budget ranges, and safety considerations.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Security</h2>
+        <p>
+          The form sends submissions over HTTPS when deployed on Vercel. Email endpoint secrets are stored as backend environment variables and are not placed in the browser code. Drafts may be stored in your own browser's local storage until you clear them.
+        </p>
+        <p>
+          No small trip form can promise perfect security, but reasonable safeguards are used: server-side forwarding, limited data collection, no public secret keys, no public response database, and a honeypot field to discourage automated spam.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Children</h2>
+        <p>
+          This form is intended for friends capable of deciding whether they want to join a trip. If a minor is invited, a parent or guardian should help decide what information is appropriate to submit.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Incidents And Complaints</h2>
+        <p>
+          If you believe your personal data has been mishandled, contact the trip organiser promptly. The organiser should investigate, correct the issue where reasonable, and make any notifications required under Singapore law.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Changes</h2>
+        <p>
+          This policy may be updated if the form, hosting setup, email provider, or trip-planning process changes. The updated date will change too, because secret policy shapeshifting is not the vibe.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">
+      Tiny legal hat, big itinerary clipboard. Questions go to the trip organiser who sent you the link.
+    </div>
+  </footer>
+</body>
+</html>

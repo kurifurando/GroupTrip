@@ -1,0 +1,1377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Johor Bahru Trip Questionnaire</title>
+  <meta name="description" content="A lightweight trip questionnaire for a Johor Bahru getaway with friends.">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Nunito+Sans:wght@400;600;700;800&display=swap");
+
+    :root {
+      --ink: #1f241f;
+      --paper: #fbf7ee;
+      --paper-strong: #fffdf7;
+      --leaf: #2f6b4f;
+      --leaf-deep: #244736;
+      --mango: #f2a93b;
+      --rose: #dd5b5b;
+      --sky: #4f93aa;
+      --plum: #6f5578;
+      --line: rgba(31, 36, 31, 0.18);
+      --muted: rgba(31, 36, 31, 0.66);
+      --shadow: 0 18px 45px rgba(55, 45, 28, 0.16);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(79, 147, 170, 0.12), transparent 34%),
+        linear-gradient(45deg, rgba(242, 169, 59, 0.16), transparent 42%),
+        var(--paper);
+      font-family: "Nunito Sans", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.26;
+      background-image:
+        linear-gradient(rgba(31, 36, 31, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 36, 31, 0.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .site-shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(251, 247, 238, 0.88);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar__inner {
+      display: flex;
+      min-height: 64px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+    }
+
+    .brand__mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--mango);
+      box-shadow: 4px 4px 0 var(--leaf);
+      font-family: "Fraunces", Georgia, serif;
+    }
+
+    .topbar__actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 9px 14px;
+      color: var(--ink);
+      background: var(--paper-strong);
+      box-shadow: 4px 4px 0 var(--ink);
+      cursor: pointer;
+      font-weight: 900;
+      text-decoration: none;
+      transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+    }
+
+    .button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+      background: #ffffff;
+    }
+
+    .button:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0 0 0 var(--ink);
+    }
+
+    .button--primary {
+      background: var(--leaf);
+      color: #fffdf7;
+      box-shadow: 4px 4px 0 var(--mango);
+    }
+
+    .button--primary:hover {
+      background: var(--leaf-deep);
+      box-shadow: 2px 2px 0 var(--mango);
+    }
+
+    .button--quiet {
+      border-color: var(--line);
+      box-shadow: none;
+      background: rgba(255, 253, 247, 0.58);
+      color: var(--muted);
+    }
+
+    .button--quiet:hover {
+      box-shadow: none;
+      color: var(--ink);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: end;
+      min-height: calc(100svh - 64px);
+      padding: 56px 0 40px;
+    }
+
+    .hero__copy {
+      padding-bottom: 10vh;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--leaf-deep);
+    }
+
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--rose);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: "Fraunces", Georgia, serif;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(3.2rem, 8vw, 7.8rem);
+    }
+
+    .hero__lede {
+      max-width: 640px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      font-weight: 700;
+    }
+
+    .hero__panel {
+      position: relative;
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 22px;
+      background: var(--paper-strong);
+      box-shadow: var(--shadow), 8px 8px 0 var(--ink);
+      transform: rotate(1deg);
+    }
+
+    .passport {
+      border: 2px dashed rgba(31, 36, 31, 0.32);
+      border-radius: var(--radius);
+      padding: 22px;
+      background:
+        linear-gradient(90deg, rgba(221, 91, 91, 0.1), transparent 24%),
+        linear-gradient(180deg, rgba(79, 147, 170, 0.13), transparent 56%),
+        #fffaf0;
+    }
+
+    .passport__stamp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 112px;
+      height: 112px;
+      margin-bottom: 24px;
+      border: 4px double var(--rose);
+      border-radius: 50%;
+      color: var(--rose);
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+      transform: rotate(-11deg);
+    }
+
+    .passport__rows {
+      display: grid;
+      gap: 13px;
+    }
+
+    .passport__row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 14px;
+      border-bottom: 1px solid rgba(31, 36, 31, 0.18);
+      padding-bottom: 10px;
+    }
+
+    .passport__label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .passport__value {
+      font-weight: 900;
+    }
+
+    .progress-wrap {
+      position: sticky;
+      top: 64px;
+      z-index: 9;
+      border-bottom: 1px solid var(--line);
+      background: rgba(251, 247, 238, 0.86);
+      backdrop-filter: blur(14px);
+    }
+
+    .progress {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 0;
+    }
+
+    .progress__track {
+      overflow: hidden;
+      height: 12px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--paper-strong);
+    }
+
+    .progress__bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--leaf), var(--mango), var(--rose));
+      transition: width 220ms ease;
+    }
+
+    .progress__text {
+      min-width: 112px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    main {
+      padding: 34px 0 80px;
+    }
+
+    form {
+      display: grid;
+      gap: 24px;
+    }
+
+    .section {
+      display: grid;
+      grid-template-columns: minmax(200px, 0.38fr) minmax(0, 0.62fr);
+      gap: 30px;
+      align-items: start;
+      border-top: 2px solid var(--ink);
+      padding: 34px 0 12px;
+    }
+
+    .section__intro {
+      position: sticky;
+      top: 128px;
+    }
+
+    .section__number {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      background: var(--mango);
+      box-shadow: 3px 3px 0 var(--ink);
+      font-weight: 900;
+    }
+
+    .section h2 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+    }
+
+    .section__hint {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .fields {
+      display: grid;
+      gap: 18px;
+    }
+
+    .field {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: rgba(255, 253, 247, 0.7);
+    }
+
+    .field__label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 900;
+    }
+
+    .field__note {
+      margin: -4px 0 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .input,
+    .textarea,
+    .select {
+      width: 100%;
+      border: 2px solid rgba(31, 36, 31, 0.28);
+      border-radius: var(--radius);
+      padding: 12px 13px;
+      color: var(--ink);
+      background: #fffef9;
+      outline: 0;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    .input:focus,
+    .textarea:focus,
+    .select:focus {
+      border-color: var(--leaf);
+      box-shadow: 0 0 0 4px rgba(47, 107, 79, 0.15);
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .grid--two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid--three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .option {
+      position: relative;
+      display: flex;
+      min-height: 68px;
+      align-items: center;
+      gap: 12px;
+      border: 2px solid rgba(31, 36, 31, 0.22);
+      border-radius: var(--radius);
+      padding: 13px;
+      background: #fffef9;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+    }
+
+    .option:hover {
+      transform: translateY(-2px);
+      border-color: rgba(31, 36, 31, 0.52);
+      box-shadow: 0 10px 22px rgba(55, 45, 28, 0.08);
+    }
+
+    .option input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--leaf);
+      flex: 0 0 auto;
+    }
+
+    .option:has(input:checked) {
+      border-color: var(--leaf);
+      background: rgba(47, 107, 79, 0.1);
+      box-shadow: inset 0 0 0 1px rgba(47, 107, 79, 0.2);
+    }
+
+    .option__text {
+      display: grid;
+      gap: 2px;
+    }
+
+    .option__main {
+      font-weight: 900;
+    }
+
+    .option__sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .range-row {
+      display: grid;
+      gap: 10px;
+    }
+
+    .range-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .range-value {
+      min-width: 158px;
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 8px 10px;
+      background: var(--mango);
+      box-shadow: 3px 3px 0 var(--ink);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--leaf);
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .date-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mini-button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 7px 10px;
+      background: #fffef9;
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .mini-button:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .consent {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-weight: 800;
+    }
+
+    .consent input {
+      width: 20px;
+      height: 20px;
+      margin-top: 3px;
+      accent-color: var(--leaf);
+      flex: 0 0 auto;
+    }
+
+    .consent a {
+      color: var(--leaf-deep);
+      font-weight: 900;
+    }
+
+    .submit-status {
+      min-height: 24px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-weight: 900;
+    }
+
+    .honeypot {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .output {
+      display: grid;
+      gap: 18px;
+      margin-top: 10px;
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 22px;
+      background: var(--paper-strong);
+      box-shadow: 7px 7px 0 var(--leaf);
+    }
+
+    .output[hidden] {
+      display: none;
+    }
+
+    .output__head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .output h2 {
+      font-size: clamp(1.8rem, 4vw, 3.1rem);
+    }
+
+    .profile-pill {
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      padding: 9px 13px;
+      background: var(--rose);
+      color: #fffdf7;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .output__summary {
+      min-height: 320px;
+      font-family: "Nunito Sans", "Segoe UI", sans-serif;
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 30;
+      transform: translateY(20px);
+      border: 2px solid var(--ink);
+      border-radius: var(--radius);
+      padding: 13px 15px;
+      background: var(--leaf-deep);
+      color: white;
+      box-shadow: 5px 5px 0 var(--mango);
+      opacity: 0;
+      pointer-events: none;
+      font-weight: 900;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .toast.is-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .footer strong {
+      color: var(--ink);
+    }
+
+    @media (max-width: 860px) {
+      .topbar__inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 12px 0;
+      }
+
+      .topbar__actions {
+        width: 100%;
+      }
+
+      .topbar__actions .button {
+        flex: 1;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        min-height: auto;
+        padding-top: 42px;
+      }
+
+      .hero__copy {
+        padding-bottom: 0;
+      }
+
+      .hero__panel {
+        transform: none;
+      }
+
+      .section {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .section__intro {
+        position: static;
+      }
+
+      .grid--three {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .site-shell {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .brand__text {
+        max-width: 220px;
+      }
+
+      .button {
+        min-height: 44px;
+        padding-inline: 10px;
+      }
+
+      .progress {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .progress__text {
+        min-width: 0;
+        text-align: left;
+      }
+
+      .grid--two,
+      .grid--three {
+        grid-template-columns: 1fr;
+      }
+
+      .passport__row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .range-top,
+      .output__head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .range-value {
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="site-shell topbar__inner">
+      <div class="brand" aria-label="Johor Bahru trip questionnaire">
+        <span class="brand__mark">JB</span>
+        <span class="brand__text">Johor Bahru Field Notes</span>
+      </div>
+      <div class="topbar__actions">
+        <a class="button button--quiet" href="#questionnaire">Start</a>
+        <a class="button button--quiet" href="/privacy.html">Privacy</a>
+        <button class="button button--quiet" type="button" id="resetBtn">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="site-shell hero" aria-labelledby="page-title">
+    <div class="hero__copy">
+      <p class="kicker">A quick friend-group calibration</p>
+      <h1 id="page-title">Johor Bahru trip readiness check.</h1>
+      <p class="hero__lede">
+        Fill this in so we can find the dates, budget, food chaos level, and exact amount of “this might become a story” everyone is comfortable with.
+      </p>
+    </div>
+    <aside class="hero__panel" aria-label="Trip docket">
+      <div class="passport">
+        <div class="passport__stamp">Worth<br>the<br>customs</div>
+        <div class="passport__rows">
+          <div class="passport__row">
+            <span class="passport__label">Destination</span>
+            <span class="passport__value">Johor Bahru</span>
+          </div>
+          <div class="passport__row">
+            <span class="passport__label">Mission</span>
+            <span class="passport__value">Eat well, roam freely, return with lore</span>
+          </div>
+          <div class="passport__row">
+            <span class="passport__label">Time needed</span>
+            <span class="passport__value">4-6 minutes</span>
+          </div>
+          <div class="passport__row">
+            <span class="passport__label">Output</span>
+            <span class="passport__value">Copyable trip readout</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="progress-wrap" aria-hidden="true">
+    <div class="site-shell progress">
+      <div class="progress__track">
+        <div class="progress__bar" id="progressBar"></div>
+      </div>
+      <div class="progress__text" id="progressText">0% packed</div>
+    </div>
+  </div>
+
+  <main class="site-shell" id="questionnaire">
+    <form id="tripForm">
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">01</span>
+          <h2>Who is reporting?</h2>
+          <p class="section__hint">So the eventual spreadsheet of human preferences has names on it.</p>
+        </div>
+        <div class="fields">
+          <label class="field">
+            <span class="field__label">Name or group-chat alias</span>
+            <input class="input" name="name" autocomplete="name" placeholder="Your name / alias" required>
+          </label>
+          <label class="field">
+            <span class="field__label">Preferred contact for follow-ups</span>
+            <input class="input" name="contact" autocomplete="email" placeholder="Telegram, WhatsApp, IG, email...">
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">02</span>
+          <h2>Schedule shape</h2>
+          <p class="section__hint">Pick broad windows first. Exact dates can be negotiated after everyone reveals their calendar crimes.</p>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <span class="field__label">Which windows could work?</span>
+            <p class="field__note">Select anything that is realistic, even if it requires a little calendar diplomacy.</p>
+            <div class="grid grid--two">
+              <label class="option"><input type="checkbox" name="windows" value="June weekends"><span class="option__text"><span class="option__main">June weekends</span><span class="option__sub">Soon, spicy, logistically alive</span></span></label>
+              <label class="option"><input type="checkbox" name="windows" value="July weekends"><span class="option__text"><span class="option__main">July weekends</span><span class="option__sub">Reasonable planning runway</span></span></label>
+              <label class="option"><input type="checkbox" name="windows" value="August weekends"><span class="option__text"><span class="option__main">August weekends</span><span class="option__sub">More time to coordinate</span></span></label>
+              <label class="option"><input type="checkbox" name="windows" value="Public holiday stretch"><span class="option__text"><span class="option__main">Public holiday stretch</span><span class="option__sub">Longer trip, more queue risk</span></span></label>
+              <label class="option"><input type="checkbox" name="windows" value="Weekday escape"><span class="option__text"><span class="option__main">Weekday escape</span><span class="option__sub">Take leave, dodge crowds</span></span></label>
+              <label class="option"><input type="checkbox" name="windows" value="Only if planned far ahead"><span class="option__text"><span class="option__main">Only far ahead</span><span class="option__sub">Needs calendar stability</span></span></label>
+            </div>
+          </div>
+          <label class="field">
+            <span class="field__label">Specific dates that are good or impossible</span>
+            <textarea class="textarea" name="dates" placeholder="Good: 12-14 July. Impossible: first weekend of August."></textarea>
+          </label>
+          <div class="field">
+            <span class="field__label">Ideal trip duration</span>
+            <div class="grid grid--three">
+              <label class="option"><input type="radio" name="duration" value="Day trip"><span class="option__text"><span class="option__main">Day trip</span><span class="option__sub">Minimal packing, maximal movement</span></span></label>
+              <label class="option"><input type="radio" name="duration" value="2D1N"><span class="option__text"><span class="option__main">2D1N</span><span class="option__sub">The classic small adventure</span></span></label>
+              <label class="option"><input type="radio" name="duration" value="3D2N"><span class="option__text"><span class="option__main">3D2N</span><span class="option__sub">Enough time to develop side quests</span></span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">03</span>
+          <h2>Trip expectations</h2>
+          <p class="section__hint">This is where we prevent one person from packing spa energy while another prepares for a treasure hunt.</p>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <span class="field__label">What would make the trip feel successful?</span>
+            <div class="grid grid--two">
+              <label class="option"><input type="checkbox" name="expectations" value="Good food discoveries"><span class="option__text"><span class="option__main">Good food discoveries</span><span class="option__sub">Worth crossing a border for</span></span></label>
+              <label class="option"><input type="checkbox" name="expectations" value="Low-stress wandering"><span class="option__text"><span class="option__main">Low-stress wandering</span><span class="option__sub">Loose plan, good company</span></span></label>
+              <label class="option"><input type="checkbox" name="expectations" value="Shopping and bargains"><span class="option__text"><span class="option__main">Shopping and bargains</span><span class="option__sub">Receipts as souvenirs</span></span></label>
+              <label class="option"><input type="checkbox" name="expectations" value="One memorable anchor activity"><span class="option__text"><span class="option__main">One anchor activity</span><span class="option__sub">Something we will actually talk about</span></span></label>
+              <label class="option"><input type="checkbox" name="expectations" value="Photo-worthy places"><span class="option__text"><span class="option__main">Photo-worthy places</span><span class="option__sub">Soft evidence that we left home</span></span></label>
+              <label class="option"><input type="checkbox" name="expectations" value="Unexpected mini-adventures"><span class="option__text"><span class="option__main">Unexpected mini-adventures</span><span class="option__sub">A little narrative texture</span></span></label>
+            </div>
+          </div>
+          <label class="field">
+            <span class="field__label">One thing you absolutely do not want this trip to become</span>
+            <textarea class="textarea" name="avoid" placeholder="Example: overpacked itinerary, too much heat, endless mall time, chaos before breakfast..."></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">04</span>
+          <h2>Fun menu</h2>
+          <p class="section__hint">Mark anything that sounds fun. This is not a legally binding contract, but it is spiritually admissible.</p>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <span class="field__label">Activities you would actively vote for</span>
+            <div class="grid grid--three">
+              <label class="option"><input type="checkbox" name="activities" value="Cafe crawl"><span class="option__text"><span class="option__main">Cafe crawl</span><span class="option__sub">Coffee, pastry, judgement</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Night market or supper hunt"><span class="option__text"><span class="option__main">Supper hunt</span><span class="option__sub">The later, the better</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Massage or spa"><span class="option__text"><span class="option__main">Massage or spa</span><span class="option__sub">Collective reset button</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Escape room"><span class="option__text"><span class="option__main">Escape room</span><span class="option__sub">Friendship under pressure</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Karaoke"><span class="option__text"><span class="option__main">Karaoke</span><span class="option__sub">Volume over dignity</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Theme park or water park"><span class="option__text"><span class="option__main">Theme park</span><span class="option__sub">Sun, queues, adrenaline</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Go-karting or active games"><span class="option__text"><span class="option__main">Go-karting</span><span class="option__sub">Friendly rivalry research</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Thrifting or outlet shopping"><span class="option__text"><span class="option__main">Thrifting</span><span class="option__sub">Treasure or nothing</span></span></label>
+              <label class="option"><input type="checkbox" name="activities" value="Nature or scenic walk"><span class="option__text"><span class="option__main">Scenic walk</span><span class="option__sub">Touch grass, but abroad</span></span></label>
+            </div>
+          </div>
+          <label class="field">
+            <span class="field__label">Wildcard activity you want to nominate</span>
+            <textarea class="textarea" name="wildcard" placeholder="The more specific, the more dangerous to the itinerary."></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">05</span>
+          <h2>Shenanigan tolerance</h2>
+          <p class="section__hint">For ideas that sound mildly irresponsible during planning and excellent in the retelling.</p>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <div class="range-row">
+              <div class="range-top">
+                <label class="field__label" for="shenanigans">How willing are you to join slightly unhinged but potentially rewarding plans?</label>
+                <span class="range-value" data-range-label="shenanigans">3 - persuade me</span>
+              </div>
+              <input type="range" id="shenanigans" name="shenanigans" min="1" max="5" value="3">
+              <div class="scale-labels"><span>Responsible citizen</span><span>Case-by-case menace</span><span>Plot accelerator</span></div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="range-row">
+              <div class="range-top">
+                <label class="field__label" for="type2">Capacity for type 2 fun</label>
+                <span class="range-value" data-range-label="type2">3 - medium rare suffering</span>
+              </div>
+              <input type="range" id="type2" name="type2" min="1" max="5" value="3">
+              <div class="scale-labels"><span>Comfort-first</span><span>Laughing after lunch</span><span>Give me the quest</span></div>
+            </div>
+          </div>
+          <label class="field">
+            <span class="field__label">Where is your line?</span>
+            <textarea class="textarea" name="line" placeholder="Example: heat is okay, hunger is not. No sketchy transport. Nothing that risks missing the ride home."></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">06</span>
+          <h2>Budget signal</h2>
+          <p class="section__hint">Not total trip cost. This is specifically for memorable activities worth paying extra for.</p>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <span class="field__label">Comfortable per-person spend for one memorable activity</span>
+            <div class="grid grid--two">
+              <label class="option"><input type="radio" name="budget" value="S$0-20"><span class="option__text"><span class="option__main">S$0-20</span><span class="option__sub">Keep it scrappy</span></span></label>
+              <label class="option"><input type="radio" name="budget" value="S$20-50"><span class="option__text"><span class="option__main">S$20-50</span><span class="option__sub">Reasonable treat zone</span></span></label>
+              <label class="option"><input type="radio" name="budget" value="S$50-90"><span class="option__text"><span class="option__main">S$50-90</span><span class="option__sub">If it is genuinely memorable</span></span></label>
+              <label class="option"><input type="radio" name="budget" value="S$90+"><span class="option__text"><span class="option__main">S$90+</span><span class="option__sub">Sell me a legendary pitch</span></span></label>
+            </div>
+          </div>
+          <label class="field">
+            <span class="field__label">What kind of activity is worth stretching the budget for?</span>
+            <textarea class="textarea" name="budgetWhy" placeholder="Example: amazing meal, private room karaoke, spa, theme park, something hard to do in Singapore..."></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">07</span>
+          <h2>Travel instincts</h2>
+          <p class="section__hint">A few soft tells about pace, decision-making, risk, and recovery. No one is being diagnosed; we are simply reducing itinerary friction.</p>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <span class="field__label">When plans go sideways, your first instinct is...</span>
+            <div class="grid grid--two">
+              <label class="option"><input type="radio" name="sideways" value="Stabilize the plan"><span class="option__text"><span class="option__main">Stabilize</span><span class="option__sub">Find the next sensible move</span></span></label>
+              <label class="option"><input type="radio" name="sideways" value="Turn it into a side quest"><span class="option__text"><span class="option__main">Side quest</span><span class="option__sub">Maybe this is the point</span></span></label>
+              <label class="option"><input type="radio" name="sideways" value="Observe and adapt"><span class="option__text"><span class="option__main">Observe</span><span class="option__sub">Let the group reveal itself</span></span></label>
+              <label class="option"><input type="radio" name="sideways" value="Secure food or rest first"><span class="option__text"><span class="option__main">Refuel</span><span class="option__sub">Morale is infrastructure</span></span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="field__label">Your ideal morning on a trip starts with...</span>
+            <div class="grid grid--two">
+              <label class="option"><input type="radio" name="morning" value="Early start with a plan"><span class="option__text"><span class="option__main">Early plan</span><span class="option__sub">Catch the day before it escapes</span></span></label>
+              <label class="option"><input type="radio" name="morning" value="Slow breakfast"><span class="option__text"><span class="option__main">Slow breakfast</span><span class="option__sub">Human first, tourist second</span></span></label>
+              <label class="option"><input type="radio" name="morning" value="Whatever the group feels"><span class="option__text"><span class="option__main">Group mood</span><span class="option__sub">Vibe-based navigation</span></span></label>
+              <label class="option"><input type="radio" name="morning" value="A bold first activity"><span class="option__text"><span class="option__main">Bold opener</span><span class="option__sub">Start with a story</span></span></label>
+            </div>
+          </div>
+          <div class="field">
+            <span class="field__label">In group decisions, you naturally tend to...</span>
+            <div class="grid grid--two">
+              <label class="option"><input type="radio" name="decision" value="Research options"><span class="option__text"><span class="option__main">Research</span><span class="option__sub">Menus, maps, opening hours</span></span></label>
+              <label class="option"><input type="radio" name="decision" value="Keep momentum"><span class="option__text"><span class="option__main">Move it along</span><span class="option__sub">Any good choice beats no choice</span></span></label>
+              <label class="option"><input type="radio" name="decision" value="Read the room"><span class="option__text"><span class="option__main">Read the room</span><span class="option__sub">Make sure everyone is okay</span></span></label>
+              <label class="option"><input type="radio" name="decision" value="Try the weird option"><span class="option__text"><span class="option__main">Weird option</span><span class="option__sub">High variance, high memory</span></span></label>
+            </div>
+          </div>
+          <label class="field">
+            <span class="field__label">Any needs, allergies, hard limits, mobility notes, or comfort constraints?</span>
+            <textarea class="textarea" name="needs" placeholder="No need to overshare. Just enough for the itinerary to be kind and workable."></textarea>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section__intro">
+          <span class="section__number">08</span>
+          <h2>Final calibration</h2>
+          <p class="section__hint">Last chance to make your future self easier to plan around.</p>
+        </div>
+        <div class="fields">
+          <label class="field">
+            <span class="field__label">One sentence itinerary request</span>
+            <textarea class="textarea" name="request" placeholder="Example: I want one amazing meal, one chill recovery block, and one story-worthy activity."></textarea>
+          </label>
+          <label class="field">
+            <span class="field__label">Anything else the trip planner should know?</span>
+            <textarea class="textarea" name="anythingElse" placeholder="Secret preferences, queue tolerance, shopping list, people you do not trust with navigation..."></textarea>
+          </label>
+          <div class="field">
+            <label class="consent">
+              <input type="checkbox" name="policyConsent" value="yes" required>
+              <span>
+                I consent to sending this response to the trip organiser by email for Johor Bahru trip planning, and I have read the
+                <a href="/privacy.html" target="_blank" rel="noreferrer">privacy policy</a>.
+              </span>
+            </label>
+            <label class="honeypot" aria-hidden="true">
+              Company website
+              <input type="text" name="companyWebsite" tabindex="-1" autocomplete="off">
+            </label>
+            <p class="submit-status" id="submitStatus" role="status" aria-live="polite"></p>
+            <button class="button button--primary" type="submit" id="submitBtn">Compose my trip readout</button>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <section class="output" id="output" hidden aria-live="polite">
+      <div class="output__head">
+        <h2>Trip readout</h2>
+        <span class="profile-pill" id="profilePill">Profile pending</span>
+      </div>
+      <textarea class="textarea output__summary" id="summaryText" readonly></textarea>
+      <div class="date-tools">
+        <button class="button button--primary" type="button" id="copyBtn">Copy readout</button>
+        <button class="button" type="button" id="downloadBtn">Download .txt</button>
+        <a class="button" id="whatsappBtn" href="#" target="_blank" rel="noreferrer">Send via WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="site-shell">
+      <strong>Privacy note:</strong> drafts stay in this browser. When you click compose, your response is sent to the trip organiser through a backend email route. <a href="/privacy.html">Read the privacy policy</a>.
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const form = document.querySelector("#tripForm");
+    const progressBar = document.querySelector("#progressBar");
+    const progressText = document.querySelector("#progressText");
+    const output = document.querySelector("#output");
+    const summaryText = document.querySelector("#summaryText");
+    const profilePill = document.querySelector("#profilePill");
+    const copyBtn = document.querySelector("#copyBtn");
+    const downloadBtn = document.querySelector("#downloadBtn");
+    const whatsappBtn = document.querySelector("#whatsappBtn");
+    const resetBtn = document.querySelector("#resetBtn");
+    const submitBtn = document.querySelector("#submitBtn");
+    const submitStatus = document.querySelector("#submitStatus");
+    const toast = document.querySelector("#toast");
+
+    const storageKey = "jb-trip-questionnaire-v1";
+
+    const rangeLabels = {
+      shenanigans: {
+        1: "1 - keep it civil",
+        2: "2 - only if supervised",
+        3: "3 - persuade me",
+        4: "4 - I hear the plot",
+        5: "5 - hand me the quest"
+      },
+      type2: {
+        1: "1 - soft life only",
+        2: "2 - mild inconvenience",
+        3: "3 - medium rare suffering",
+        4: "4 - funny after showering",
+        5: "5 - laughter through pain"
+      }
+    };
+
+    const profileMap = {
+      planner: "Quietly Reliable Cartographer",
+      caretaker: "Morale Infrastructure Specialist",
+      adventurer: "High-Variance Side Quester",
+      drifter: "Vibe-Literate Wanderer",
+      comfort: "Soft-Life Strategist"
+    };
+
+    function getFormData() {
+      const data = new FormData(form);
+      const grouped = {};
+
+      for (const [key, value] of data.entries()) {
+        if (grouped[key]) {
+          grouped[key] = Array.isArray(grouped[key]) ? [...grouped[key], value] : [grouped[key], value];
+        } else {
+          grouped[key] = value;
+        }
+      }
+
+      form.querySelectorAll("input[type='checkbox']").forEach((input) => {
+        if (!grouped[input.name]) grouped[input.name] = [];
+      });
+
+      return grouped;
+    }
+
+    function list(value) {
+      if (Array.isArray(value)) return value.length ? value.join(", ") : "None selected";
+      return value || "Not answered";
+    }
+
+    function scoreProfile(data) {
+      const scores = {
+        planner: 0,
+        caretaker: 0,
+        adventurer: 0,
+        drifter: 0,
+        comfort: 0
+      };
+
+      const shenanigans = Number(data.shenanigans || 3);
+      const type2 = Number(data.type2 || 3);
+
+      if (shenanigans >= 4) scores.adventurer += 3;
+      if (type2 >= 4) scores.adventurer += 2;
+      if (shenanigans <= 2) scores.comfort += 2;
+      if (type2 <= 2) scores.comfort += 2;
+
+      const signals = [
+        data.sideways,
+        data.morning,
+        data.decision,
+        ...(Array.isArray(data.expectations) ? data.expectations : [data.expectations]),
+        ...(Array.isArray(data.activities) ? data.activities : [data.activities])
+      ].filter(Boolean).join(" | ");
+
+      if (/Stabilize|Early start|Research|planned|anchor/i.test(signals)) scores.planner += 4;
+      if (/Refuel|Slow breakfast|Read the room|Low-stress|Massage|spa/i.test(signals)) scores.caretaker += 4;
+      if (/Side quest|Bold opener|weird|Unexpected|Escape room|Theme park|Go-karting|supper/i.test(signals)) scores.adventurer += 4;
+      if (/Observe|Whatever|wandering|Photo-worthy|Cafe crawl|Thrifting|Nature/i.test(signals)) scores.drifter += 4;
+      if (/Low-stress|Slow breakfast|Massage|spa|Comfort/i.test(signals)) scores.comfort += 2;
+
+      const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+      return profileMap[winner];
+    }
+
+    function buildSummary(data) {
+      const profile = scoreProfile(data);
+      const shenaniganLabel = rangeLabels.shenanigans[data.shenanigans || 3];
+      const type2Label = rangeLabels.type2[data.type2 || 3];
+
+      return {
+        profile,
+        text: [
+          "Johor Bahru Trip Readout",
+          "=========================",
+          "",
+          `Name: ${data.name || "Not answered"}`,
+          `Contact: ${data.contact || "Not answered"}`,
+          `Traveler read: ${profile}`,
+          "",
+          "Schedule",
+          `- Possible windows: ${list(data.windows)}`,
+          `- Specific date notes: ${data.dates || "Not answered"}`,
+          `- Ideal duration: ${data.duration || "Not answered"}`,
+          "",
+          "Trip Expectations",
+          `- Success looks like: ${list(data.expectations)}`,
+          `- Please avoid: ${data.avoid || "Not answered"}`,
+          "",
+          "Activities",
+          `- Votes for: ${list(data.activities)}`,
+          `- Wildcard nomination: ${data.wildcard || "Not answered"}`,
+          "",
+          "Chaos, Type 2 Fun, and Limits",
+          `- Shenanigan tolerance: ${shenaniganLabel}`,
+          `- Type 2 fun capacity: ${type2Label}`,
+          `- Hard line: ${data.line || "Not answered"}`,
+          "",
+          "Budget",
+          `- Memorable activity spend: ${data.budget || "Not answered"}`,
+          `- Worth stretching budget for: ${data.budgetWhy || "Not answered"}`,
+          "",
+          "Travel Instincts",
+          `- When plans go sideways: ${data.sideways || "Not answered"}`,
+          `- Ideal morning: ${data.morning || "Not answered"}`,
+          `- Group decision style: ${data.decision || "Not answered"}`,
+          `- Needs or constraints: ${data.needs || "Not answered"}`,
+          "",
+          "Final Notes",
+          `- One-sentence itinerary request: ${data.request || "Not answered"}`,
+          `- Anything else: ${data.anythingElse || "Not answered"}`
+        ].join("\n")
+      };
+    }
+
+    async function sendReadout(data, summary) {
+      const response = await fetch("/api/field-notes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          data,
+          profile: summary.profile,
+          summary: summary.text,
+          pageUrl: window.location.href,
+          submittedAt: new Date().toISOString()
+        })
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || "The backend could not send the readout.");
+      }
+
+      return result;
+    }
+
+    function saveDraft() {
+      const data = getFormData();
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      updateProgress();
+    }
+
+    function restoreDraft() {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return;
+
+      try {
+        const data = JSON.parse(raw);
+        Object.entries(data).forEach(([key, value]) => {
+          const values = Array.isArray(value) ? value : [value];
+          const controls = form.querySelectorAll(`[name="${CSS.escape(key)}"]`);
+
+          controls.forEach((control) => {
+            if (control.type === "checkbox" || control.type === "radio") {
+              control.checked = values.includes(control.value);
+            } else {
+              control.value = value;
+            }
+          });
+        });
+      } catch {
+        localStorage.removeItem(storageKey);
+      }
+    }
+
+    function updateRangeLabels() {
+      form.querySelectorAll("input[type='range']").forEach((range) => {
+        const label = document.querySelector(`[data-range-label="${range.name}"]`);
+        if (label) label.textContent = rangeLabels[range.name][range.value];
+      });
+    }
+
+    function updateProgress() {
+      const fields = [...form.querySelectorAll("input, textarea")].filter((field) => field.type !== "hidden");
+      const groups = new Map();
+
+      fields.forEach((field) => {
+        if (field.type === "radio" || field.type === "checkbox") {
+          groups.set(field.name, groups.get(field.name) || []);
+          groups.get(field.name).push(field);
+        } else {
+          groups.set(field.name, [field]);
+        }
+      });
+
+      let complete = 0;
+      groups.forEach((items) => {
+        const first = items[0];
+        if (first.type === "radio" || first.type === "checkbox") {
+          if (items.some((item) => item.checked)) complete += 1;
+        } else if (String(first.value).trim()) {
+          complete += 1;
+        }
+      });
+
+      const percent = Math.round((complete / groups.size) * 100);
+      progressBar.style.width = `${percent}%`;
+      progressText.textContent = `${percent}% packed`;
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("is-visible"), 1900);
+    }
+
+    form.addEventListener("input", () => {
+      updateRangeLabels();
+      saveDraft();
+    });
+
+    form.addEventListener("change", saveDraft);
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = getFormData();
+      const summary = buildSummary(data);
+
+      summaryText.value = summary.text;
+      profilePill.textContent = summary.profile;
+      whatsappBtn.href = `https://wa.me/?text=${encodeURIComponent(summary.text)}`;
+      output.hidden = false;
+      output.scrollIntoView({ behavior: "smooth", block: "start" });
+      saveDraft();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending readout...";
+      submitStatus.textContent = "Sending this to the trip organiser. The secret email endpoint remains server-side.";
+
+      try {
+        await sendReadout(data, summary);
+        submitStatus.textContent = "Sent. Your future trip planner has been politely burdened with knowledge.";
+        showToast("Readout sent");
+      } catch (error) {
+        submitStatus.textContent = "The readout was composed, but email sending failed. Copy it manually or try again.";
+        showToast(error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Compose my trip readout";
+      }
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(summaryText.value);
+      showToast("Readout copied");
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      const name = (getFormData().name || "friend").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      const blob = new Blob([summaryText.value], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `jb-trip-readout-${name || "friend"}.txt`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      const confirmed = window.confirm("Clear this questionnaire draft?");
+      if (!confirmed) return;
+      localStorage.removeItem(storageKey);
+      form.reset();
+      output.hidden = true;
+      submitStatus.textContent = "";
+      updateRangeLabels();
+      updateProgress();
+      showToast("Draft cleared");
+    });
+
+    restoreDraft();
+    updateRangeLabels();
+    updateProgress();
+  </script>
+</body>
+</html>
