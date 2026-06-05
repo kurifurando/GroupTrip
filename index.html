@@ -1023,7 +1023,7 @@
             <label class="consent">
               <input type="checkbox" name="policyConsent" value="yes" required>
               <span>
-                I consent to sending this response to the trip organiser by email for Johor Bahru trip planning, and I have read the
+                I consent to storing this response in the trip organiser's private Google Sheet for Johor Bahru trip planning, and I have read the
                 <a href="/privacy.html" target="_blank" rel="noreferrer">privacy policy</a>.
               </span>
             </label>
@@ -1054,13 +1054,22 @@
 
   <footer class="footer">
     <div class="site-shell">
-      <strong>Privacy note:</strong> drafts stay in this browser. When you click compose, your response is sent to the trip organiser through a backend email route. <a href="/privacy.html">Read the privacy policy</a>.
+      <strong>Privacy note:</strong> drafts stay in this browser. When you click compose, your response is saved to the trip organiser's private Google Sheet. <a href="/privacy.html">Read the privacy policy</a>.
     </div>
   </footer>
 
   <div class="toast" id="toast" role="status"></div>
 
   <script>
+    // ---------------------------------------------------------------------
+    // Connect this form to your Google Sheet.
+    // Paste the Apps Script "Web app" URL (ends in /exec) from the deployment
+    // step in google-apps-script/Code.gs. SHEET_SECRET is optional and must
+    // match SHARED_SECRET in that script (leave both empty to disable).
+    // ---------------------------------------------------------------------
+    const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzaoCJYZmiF9rcMcTuPIHIT0E0X5tDCsuLju-uFS6L9IDtyugDsXm68iVSowE9uP774Ow/exec";
+    const SHEET_SECRET = "kwokwheewee";
+
     const form = document.querySelector("#tripForm");
     const progressBar = document.querySelector("#progressBar");
     const progressText = document.querySelector("#progressText");
@@ -1211,27 +1220,29 @@
       };
     }
 
-    async function sendReadout(data, summary) {
-      const response = await fetch("/api/field-notes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          data,
-          profile: summary.profile,
-          summary: summary.text,
-          pageUrl: window.location.href,
-          submittedAt: new Date().toISOString()
-        })
-      });
-
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok || !result.ok) {
-        throw new Error(result.error || "The backend could not send the readout.");
+    async function sendToSheet(data, summary) {
+      if (!SHEET_ENDPOINT || SHEET_ENDPOINT.startsWith("PASTE_")) {
+        throw new Error("This form is not connected to a Google Sheet yet.");
       }
 
-      return result;
+      // Apps Script web apps don't return CORS headers, so we send a "simple"
+      // request (text/plain, no-cors) to avoid a preflight. The response is
+      // opaque: if fetch resolves, the row was submitted; we can't read a body.
+      await fetch(SHEET_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          secret: SHEET_SECRET,
+          profile: summary.profile,
+          summaryText: summary.text,
+          sourceUrl: window.location.href,
+          submittedAt: new Date().toISOString(),
+          response: data
+        })
+      });
     }
 
     function saveDraft() {
@@ -1325,15 +1336,15 @@
       saveDraft();
 
       submitBtn.disabled = true;
-      submitBtn.textContent = "Sending readout...";
-      submitStatus.textContent = "Sending this to the trip organiser. The secret email endpoint remains server-side.";
+      submitBtn.textContent = "Saving readout...";
+      submitStatus.textContent = "Recording this in the trip organiser's private Google Sheet...";
 
       try {
-        await sendReadout(data, summary);
-        submitStatus.textContent = "Sent. Your future trip planner has been politely burdened with knowledge.";
-        showToast("Readout sent");
+        await sendToSheet(data, summary);
+        submitStatus.textContent = "Saved. Your future trip planner has been politely burdened with knowledge.";
+        showToast("Readout saved");
       } catch (error) {
-        submitStatus.textContent = "The readout was composed, but email sending failed. Copy it manually or try again.";
+        submitStatus.textContent = "The readout was composed, but saving failed. Copy it manually or try again.";
         showToast(error.message);
       } finally {
         submitBtn.disabled = false;

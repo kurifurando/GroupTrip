@@ -249,13 +249,13 @@
       <p class="kicker">Privacy policy, not a treasure map</p>
       <h1>Your data, kept out of the glovebox.</h1>
       <p class="lede">
-        This policy explains what happens when you submit the Johor Bahru trip questionnaire. Short version: the trip organiser gets your answers by email so they can plan the trip, not build a tiny surveillance empire with snacks.
+        This policy explains what happens when you submit the Johor Bahru trip questionnaire. Short version: your answers are saved to the trip organiser's private Google Sheet so they can plan the trip, not build a tiny surveillance empire with snacks.
       </p>
     </section>
 
     <section class="policy-grid" aria-label="Privacy policy details">
       <div class="note">
-        Last updated: 4 June 2026. This policy is written for a small private trip-planning questionnaire based in Singapore and is intended to align with Singapore's Personal Data Protection Act 2012.
+        Last updated: 5 June 2026. This policy is written for a small private trip-planning questionnaire based in Singapore and is intended to align with Singapore's Personal Data Protection Act 2012.
       </div>
 
       <article class="policy-card">
@@ -277,7 +277,7 @@
           <li>schedule availability and date constraints;</li>
           <li>trip expectations, preferred activities, budget comfort, and travel preferences;</li>
           <li>voluntary notes such as allergies, mobility needs, comfort constraints, or hard limits;</li>
-          <li>technical submission details such as the time of submission and standard hosting or email-provider logs.</li>
+          <li>technical submission details such as the time of submission and standard hosting or Google service logs.</li>
         </ul>
         <p>
           Please do not include highly sensitive information unless it is genuinely needed for safe trip planning. The form is for vibes, logistics, and responsible snack-adjacent planning.
@@ -312,10 +312,10 @@
       <article class="policy-card">
         <h2>Disclosure And Transfer</h2>
         <p>
-          When you submit, your response is sent through a backend email route to the trip organiser. The public webpage does not expose the real email service endpoint, API token, or recipient address.
+          When you submit, your response is saved to a private Google Sheet owned by the trip organiser, via a Google Apps Script web app. Only the organiser (and anyone they choose to share the Sheet with) can read it; there is no publicly readable list of responses.
         </p>
         <p>
-          The site may use hosting and email providers such as Vercel and the organiser's chosen email service. Those providers may process data outside Singapore. The organiser should use reputable providers and take reasonable steps to ensure any overseas transfer receives protection comparable to Singapore's PDPA standards.
+          The site relies on static web hosting and on Google (Google Sheets and Apps Script) to receive and store responses. Those providers may process data outside Singapore. The organiser should use reputable providers and take reasonable steps to ensure any overseas transfer receives protection comparable to Singapore's PDPA standards.
         </p>
       </article>
 
@@ -343,10 +343,10 @@
       <article class="policy-card">
         <h2>Security</h2>
         <p>
-          The form sends submissions over HTTPS when deployed on Vercel. Email endpoint secrets are stored as backend environment variables and are not placed in the browser code. Drafts may be stored in your own browser's local storage until you clear them.
+          The form sends submissions over HTTPS to the organiser's Google Sheet. Responses are stored in a private Sheet that is not publicly viewable, and Google account login is handled entirely on Google's side. Drafts may be stored in your own browser's local storage until you clear them.
         </p>
         <p>
-          No small trip form can promise perfect security, but reasonable safeguards are used: server-side forwarding, limited data collection, no public secret keys, no public response database, and a honeypot field to discourage automated spam.
+          No small trip form can promise perfect security, but reasonable safeguards are used: a private (non-public) response Sheet, limited data collection, and a honeypot field to discourage automated spam.
         </p>
       </article>
 
@@ -367,7 +367,7 @@
       <article class="policy-card">
         <h2>Changes</h2>
         <p>
-          This policy may be updated if the form, hosting setup, email provider, or trip-planning process changes. The updated date will change too, because secret policy shapeshifting is not the vibe.
+          This policy may be updated if the form, hosting setup, storage provider, or trip-planning process changes. The updated date will change too, because secret policy shapeshifting is not the vibe.
         </p>
       </article>
     </section>
